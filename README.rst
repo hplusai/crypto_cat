@@ -23,7 +23,7 @@ Rebuy : 50%
 Sell : 20%
 Amo : 10%
 
-In this case (when amo is less than min(Rebuy,Sell) you may sell your token infinitely (while price going up). 
+In this case (when amo is less than min(Rebuy,Sell)) you may sell your token infinitely (while price going up). 
 There is also some trick:
 To keep it work with small balances (less than 10$ - min val for order on binance) 
 To keep diversity of coins real =) Such pairs (orders) processing via 2 orders. 
