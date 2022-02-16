@@ -3,6 +3,7 @@ Decription:
 Crypto Cat - Very simple trading bot (safe mode, aka smart invest). Partial profit close and partial rebuy.
 IMPORTANT!: I checked this version only with USDT pairs.
 More testing needed.
+Works with Spot. Binance.
 
 How it works : You may select a pair of tokens via web interface 
 (https://127.0.0.1:8080 or https://<YOUR SERVER>:8080
