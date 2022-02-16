@@ -1,0 +1,67 @@
+<html>
+    <meta charset="utf-8" />
+    <script type="text/ecmascript" src="js/jquery.min.js"></script>
+    <script type="text/ecmascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/ecmascript" src="js/jquery.mousewheel.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="js/jquery-ui.css" />
+    <script type="text/ecmascript" src="js/jquery-editable-select.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="js/jquery-editable-select.css" />
+    <link rel="stylesheet" href="custom.css" />
+    <title></title>
+
+<script src="my_utils.js"></script> 
+<script src="js/store.js"></script>
+<script src="crypto.js"></script>
+<body>
+  <span>Hide inactive: <input class="store" type="checkbox" id="hide_inactive"/></span>
+  <span>Usdt base:<input class="store" type="checkbox" id="only_usdt"/></span>
+<br/>
+  <!--span title="Start Amount" >Start Amount: <input class="store" type="number" id="base_usd_amount" value="100"/></span-->
+  <!--span title="Steps">Steps: <input class="store" type="number" id="token_amo_percent" value="3"/></span-->
+  <span title="Rebuy %">Rebuy %: <input class="store" type="number" id="rebuy" value="50"/></span>
+  <span title="Sell %">Sell %: <input class="store" type="number" id="profit" value="20"/></span>
+  <span title="Amount in % from total amount." >Token Amo %: <input class="store" type="number" id="token_amo_percent" value="10"/></span>
+  <br/>
+  <span class="weight_info"></span>
+  <br/>
+<table id="pairs">
+  <thead>
+    <tr>
+      <th>Token<br/><input type="text" id="t_search" placeholder="Search for tokens.."/></th>
+      <th>Bal</th>
+      <th>Base</th>
+      <th>Bal</th>
+      <th>Last Trade</th>
+      <th>Price</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+<tbody>
+</tbody>
+</table>
+
+<br/>
+<div class="store">
+  <!--a href='https://www.binance.com/userCenter/createApi.html'>Api Key</a-->
+  <table id="accounts">
+    <tr><th>Key</th><th>Secret</th></tr>
+    <tr><td><input type="text" id="n_api_key"/></td><td><input type="text" id="n_api_sec"/></td></tr>
+  </table>
+  <!--div><span>Transfer Amo:</span><input type="number" id="transfer_amo" value='5'></input></div-->
+  <br/>
+  <!--span>Condition Alert: </span><input type="text" id="cond"/-->
+  <a href="tg://resolve?domain=BotFather"><span>Telegram Bot Token:</span></a><input type="text" id="tg_token"/>
+  <!--a href="tg://resolve?domain=crypto_test123123123_bot"><span>Telegram Token:</span></a><input type="text" id="tg_token"/-->
+  <br/>
+  <a href="tg://resolve?domain=userinfobot"><span>Telegram Chat Id:</span></a><input type="text" id="tg_chat_id"/>
+  <br/>
+  <!--a href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks"><span>Discord Hook (Url):</span></a><input type="text" id="dc_url"/-->
+  <!--span>Email: </span><input type="text" id="email"/>
+  <span>Voice</span><input type="checkbox" id="use_voice"/>
+  <br/-->
+  <span>Reload(secs):</span>
+  <input type="number" id="ctl_upd_interval" value='30' title="Update information every X seconds"></input>
+  <br/>
+</div>
+  <!--button onclick="BapiChanged()">Save Api</button-->
+</body></html>

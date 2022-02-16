@@ -1,0 +1,119 @@
+#auto_params input[type=number] {
+  width : 100px;
+}
+
+.green {
+  color : green;
+}
+
+.red {
+  color : red;
+}
+
+.gray {
+  color : gray;
+}
+
+.blue {
+  color : blue;
+}
+
+.right {
+  float:right;
+}
+
+#pairs tr td {
+  border: 1px solid gray;
+}
+
+/*#pairs {
+  border-collapse:collapse;
+}*/
+
+#pairs tr.auto td {
+  border: 2px solid green;
+}
+
+#groups {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+/*table td,
+table th {
+  border: 1px solid blue;
+}*/
+
+#groups thead {
+  border: 2px solid blue;
+}
+
+#groups thead * {
+  border: 1px solid blue;
+  font-size:20px;
+  color:blue;
+/*  font-weight: bold;*/
+}
+
+#groups tbody.group td {
+  border: 1px solid black;
+/*  color:black;*/
+  font-size:18px;
+}
+
+#groups tbody.group {
+  font-size:18px;
+}
+
+#groups .group tr.total {
+  font-size:18px;  
+  font-weight: bold;
+}
+
+tr.break, tr.break * {
+  border: 0px none orange;
+}
+
+#groups .group tr.tr_long {
+  border-top: 2px solid green;
+  border-left: 2px solid green;
+  border-bottom: 2px solid green;
+}
+
+#groups .group tr.tr_short {
+  border-top: 2px solid red;
+  border-left: 2px solid red;
+  border-bottom: 2px solid red;
+}
+
+#groups .group tr.tr_net {
+  border-top: 2px solid blue;
+  border-left: 2px solid blue;
+  border-bottom: 2px solid blue;
+}
+
+/*tr {outline: thin solid blue;}*/
+td.green {
+  color : green;
+}
+
+td.red {
+  color : red;
+}
+
+td.gray {
+  color : gray;
+}
+
+input.state_0 {
+ background : gray;
+}
+
+input.state_1 {
+ background : green;
+}
+
+
+input[type=number] {
+  width : 100px;
+}
