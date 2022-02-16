@@ -35,8 +35,8 @@ Demo:
 To check how it works:
 https://elcrypto.top:8080/
 (we will try to keep this service running, but no garantee =) )
-![Direct trade](https://github.com/hplusai/crypto_cat/blob/main/trade_window.png)
-![Add new pair to auto trading](https://github.com/hplusai/crypto_cat/blob/main/add_pair_window.png)
+Add new pair to auto trading .. image:: https://raw.githubusercontent.com/hplusai/crypto_cat/main/add_pair_window.png
+.. image:: https://raw.githubusercontent.com/hplusai/crypto_cat/main/trade_window.png
 
 Installation:
 =============
