@@ -27,7 +27,7 @@ In this case (when amo is less than min(Rebuy,Sell)) you may sell your token inf
 There is also some trick:
 To keep it work with small balances (less than 10$ - min val for order on binance) 
 To keep diversity of coins real =) Such pairs (orders) processing via 2 orders. 
-We need to sell 5$ of some token : so we will buy on 10$ and sell on 15$ =).
+We need to sell 5$ of some token : so we will buy 10$ (usd equvivalent to amo) and sell 15$ =).
 Also it is strictly recommended to have a provision (at least 30$ for small opers).
 
 Demo:
