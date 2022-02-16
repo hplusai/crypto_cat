@@ -48,7 +48,7 @@ Messaging system through log files and telegram channel (Just click on links in 
 To create API keys for trading (you may also try with view-access key =) - to check balance).
 https://www.binance.com/en/my/settings/api-management
 
-system reqs
+system reqs:
 pip install -r requirements.txt
 
 You may try to start task (server) manually:
