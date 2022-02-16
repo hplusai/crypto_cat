@@ -66,3 +66,6 @@ After registration job will start automatically.
 
 *Small tip, to completly remove annoying command-line window in Windows
 you need to open your scheduler tasks, find task crypto_cat and change Security options to : "Run whether user is logged on or not".
+
+Settings are stored in setts.txt
+core.py - Easy to use (just infinite tree refs), data structure stored via text. For tiny storages (settings).
