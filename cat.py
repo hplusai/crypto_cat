@@ -137,7 +137,9 @@ def _custom_post(p,data):
             order.pair=save_pair
             order.acc=save_acc
     if p!='upd':
-        return
+        return b''
+    if str(c.key).strip()=='':
+        return b''
     try:
         cur=setts[c.key]
         token=c.tok
@@ -291,10 +293,10 @@ def main():
 
 try:
     log('Init app.')
-    webserv.StartServer(host='localhost',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
+    webserv.StartServer(host='127.0.0.1',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
     save_setts()
 except:
     error()
 
-#p = subprocess.Popen(['python','cat.py'], start_new_session=True)
+p = subprocess.Popen(['python3','cat.py'], start_new_session=True)
 #os.startfile('python3 cat.py &')
