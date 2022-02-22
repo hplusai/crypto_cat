@@ -35,6 +35,8 @@ def upd_act_prices(p):
     p.buy_price=_buy*p.last_p
 
 def get_tok_base(symb, toks):
+#    log('ahueli blyadi')
+#    log(symb)
     if '/' in symb:
         return symb.split('/')
     if '_' in symb:
@@ -70,53 +72,64 @@ def _custom_get(p,pars):
     c=Core(**pars)
     ret=[]
     if (p=='info'):
+        log('zhopa')
+        tot={}
         cur=setts[c.key]
         t_last_oper=now()
-
-        cl=get_client(c)
-        bal=cl.get_account()
-        tot={}
-        for key in bal['balances']:
-            token=key['asset']
-            amo=float(key['free'])+float(key['locked'])
-            t_usd=token+'USDT'
-            t_btc=token+'BTC'
-            b_usd='BTCUSDT'
-            usd=0
-            if token=='USDT':
-                usd=amo
-            elif t_usd in order.prices:
-                usd=amo*order.prices[t_usd]
-            else:
-                if t_btc in order.prices:
-                    in_btc=amo*order.prices[t_btc]
-                    usd=in_btc*order.prices[b_usd]
+        try:
+            cl=get_client(c)
+            bal=cl.get_account()
+            #log(str(order.prices.items()))
+            log('zhopa1')
+            for key in bal['balances']:
+                token=key['asset']
+                amo=float(key['free'])+float(key['locked'])
+                t_usd=token+'USDT'
+                t_btc=token+'BTC'
+                b_usd='BTCUSDT'
+                usd=0
+                if token=='USDT':
+                    usd=amo
+                elif t_usd in order.prices:
+                    usd=amo*order.prices[t_usd]
                 else:
-                    usd=0
-            tot[token]=Core(usd=usd,amo=amo,name=token)
+                    if t_btc in order.prices:
+                        in_btc=amo*order.prices[t_btc]
+                        usd=in_btc*order.prices[b_usd]
+                    else:
+                        usd=0
+                tot[token]=Core(usd=usd,amo=amo,name=token)
 
-        tok,bas=get_tok_base('BTCTUSD',tot.keys())
-        for n in cur.pairs:
-            v=cur.pairs[n]
-            v.price=order.prices[v.symbol]
-            tok,bas=get_tok_base(n,tot.keys())
-            v.token=tot[tok]
-            v.base=tot[bas]
-            ret.append(v)
+            log('zhopa2')
+            tok,bas=get_tok_base('BTCUSDT',tot.keys())
+            for n in cur.pairs:
+                v=cur.pairs[n]
+                v.price=order.prices[v.symbol]
+                tok,bas=get_tok_base(n,tot.keys())
+                v.token=tot[tok]
+                v.base=tot[bas]
+                ret.append(v)
+        except:
+            info('error')
 
+        log('zhopa3')
         for (symb,price) in order.prices.items():
             if symb in cur.pairs:
                 continue
             #_b=bal[symb]
-            tok,bas=get_tok_base(symb,tot.keys())
-            if (bas not in tot) or (tok not in tot):
-                pass
+            tbase=get_tok_base(symb,tot.keys())
+            if tbase is None:
+                continue
+            tok,bas=tbase
             try:
-                pars={'symbol':symb,'price':price,'mode':'none','token':tot[tok],'base':tot[bas]}
+                if (bas not in tot) or (tok not in tot):
+                    t,b=Core(usd=0,amo=0,name=tok),Core(usd=0,amo=0,name=bas)
+                else:
+                    t,b=tot[tok],tot[bas]
+                pars={'symbol':symb,'price':price,'mode':'none','token':t,'base':b}
                 ret.append(pars)
             except:
-                print('ERROR:',symb,traceback.format_exc())
-                print('\n')
+                info('error')
 
     return bytes(str(ret),'utf-8')
 
@@ -188,6 +201,7 @@ def main():
     stop_time=_now+datetime.timedelta(minutes = 13)
     iter_cnt=0
     time_koef=20
+    upd_prices()
     while _now<stop_time:
         iter_cnt+=1
         while as_secs((now()-t_last_req))<0.1*time_koef:
