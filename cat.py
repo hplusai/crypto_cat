@@ -137,9 +137,9 @@ def _custom_post(p,data):
             order.pair=save_pair
             order.acc=save_acc
     if p!='upd':
-        return b''
+        return
     if str(c.key).strip()=='':
-        return b''
+        return
     try:
         cur=setts[c.key]
         token=c.tok
@@ -194,7 +194,8 @@ def main():
             yield
         upd_prices()
         t_last_req=now()
-        for acc_name in setts:
+        accs=[x for x in setts]
+        for acc_name in accs:
             acc=setts[acc_name]
             order.acc=acc
             symbs=[x for x in acc.pairs]
@@ -293,7 +294,7 @@ def main():
 
 try:
     log('Init app.')
-    webserv.StartServer(host='127.0.0.1',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
+    webserv.StartServer(host='elcrypto.top',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
     save_setts()
 except:
     error()
