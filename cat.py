@@ -45,6 +45,9 @@ def get_tok_base(symb, toks):
     if symb.endswith('USDT'):
         return [symb[:-4],'USDT']
 
+    if symb.endswith('BUSD'):
+        return [symb[:-4],'BUSD']
+
     if symb.endswith('BTC'):
         return [symb[:-3],'BTC']
 
@@ -64,7 +67,8 @@ def get_tok_base(symb, toks):
         if symb.endswith(x) and (symb[:-len(x)] in toks):
             return [symb[:-len(x)],x]
 
-    error('cannot split: '+symb)
+    #log('cannot split: '+symb)
+    return None
 
 def _custom_get(p,pars):
     global t_last_oper
@@ -72,7 +76,6 @@ def _custom_get(p,pars):
     c=Core(**pars)
     ret=[]
     if (p=='info'):
-        log('zhopa')
         tot={}
         cur=setts[c.key]
         t_last_oper=now()
@@ -80,7 +83,6 @@ def _custom_get(p,pars):
             cl=get_client(c)
             bal=cl.get_account()
             #log(str(order.prices.items()))
-            log('zhopa1')
             for key in bal['balances']:
                 token=key['asset']
                 amo=float(key['free'])+float(key['locked'])
@@ -100,7 +102,6 @@ def _custom_get(p,pars):
                         usd=0
                 tot[token]=Core(usd=usd,amo=amo,name=token)
 
-            log('zhopa2')
             tok,bas=get_tok_base('BTCUSDT',tot.keys())
             for n in cur.pairs:
                 v=cur.pairs[n]
@@ -112,7 +113,6 @@ def _custom_get(p,pars):
         except:
             info('error')
 
-        log('zhopa3')
         for (symb,price) in order.prices.items():
             if symb in cur.pairs:
                 continue
@@ -305,7 +305,7 @@ def main():
         yield
         #time.sleep(1)
     webserv.shutd=True
-
+#exit(0)
 try:
     log('Init app.')
     webserv.StartServer(host='elcrypto.top',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
