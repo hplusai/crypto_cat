@@ -1,5 +1,3 @@
-Please wait. Important Fixing. (adding account were broken).
-
 Decription:
 =============
 Crypto Cat - Very simple trading bot (safe mode, aka smart invest). Partial profit close and partial rebuy.
