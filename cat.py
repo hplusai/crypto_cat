@@ -204,6 +204,8 @@ def main():
     upd_prices()
     while _now<stop_time:
         iter_cnt+=1
+        if iter_cnt%100==0:
+            log('iter=%d'%iter_cnt)
         while as_secs((now()-t_last_req))<0.1*time_koef:
             yield
         upd_prices()
@@ -246,14 +248,14 @@ def main():
                             continue
                         amo=-amo
                     elif (p<pair.buy_price):
+                        if bal.base.free<std_base_amo*1.5:
+                            continue
                         _buy=1-pair.rebuy/100.0
                         amo=amo*math.log(p_koef,_buy)*max(pair.rebuy/pair.profit,1)/_buy
                         if bal.base.free<amo*p:
                             continue
                         #amo=max(min(bal.base.free/2,amo*p),std_base_amo)/p
                     else:
-                        continue
-                    if bal.base.free<std_base_amo*1.5:
                         continue
                     #if bal.token.free<std_amo:
                     #    continue
@@ -308,7 +310,7 @@ def main():
 #exit(0)
 try:
     log('Init app.')
-    webserv.StartServer(host='elcrypto.top',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
+    webserv.StartServer(host='localhost',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
     save_setts()
 except:
     error()
