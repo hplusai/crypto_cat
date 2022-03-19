@@ -235,7 +235,7 @@ def main():
                     if symbol not in acc.pairs:
                         continue #probably was removed
 
-                    log(symbol+':anal')
+                    #log(symbol+':anal')
                     t_last_oper=now()
                     p_koef=p/pair.last_p
                     std_base_amo=std_base_amount(pair.base.name)
@@ -244,7 +244,7 @@ def main():
                     amo=bal.token.free*(pair.act_amo/100)
                     #amo=max(amo,std_amo)
                     #log('che za her:'+str(p)+';'+str(pair.buy_price))
-                    log(symbol+'cmp')
+                    #log(symbol+'cmp')
                     if (p>pair.sell_price):
                         _sell=1+pair.profit/100.0
                         amo=amo*math.log(p_koef,_sell)*max(pair.profit/pair.rebuy,1)/_sell
@@ -312,7 +312,7 @@ def main():
         yield
         #time.sleep(1)
     webserv.shutd=True
-
+#exit(0)
 try:
     log('Init app.')
     webserv.StartServer(host='localhost',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
