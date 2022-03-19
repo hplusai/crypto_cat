@@ -200,13 +200,13 @@ def main():
     _now=now()
     stop_time=_now+datetime.timedelta(minutes = 13)
     iter_cnt=0
-    time_koef=20
+    time_koef=2
     upd_prices()
     while _now<stop_time:
         iter_cnt+=1
         if iter_cnt%100==0:
             log('iter=%d'%iter_cnt)
-        while as_secs((now()-t_last_req))<0.1*time_koef:
+        while as_secs((now()-t_last_req))<time_koef:
             yield
         upd_prices()
         t_last_req=now()
@@ -223,16 +223,19 @@ def main():
                     if not pair.last_p:
                         pair.last_p=p
 
+                    #log(symbol+':secs='+str(as_secs((now()-t_last_oper))))
                     #log('mlya %s<%s<%s:'%(pair.buy_price,p,pair.sell_price))
                     if (p>pair.buy_price) and (p<pair.sell_price):
                         continue
 
+                    #log(symbol+':try secs')
                     while as_secs((now()-t_last_oper))<1*time_koef:
                         yield
 
                     if symbol not in acc.pairs:
                         continue #probably was removed
 
+                    log(symbol+':anal')
                     t_last_oper=now()
                     p_koef=p/pair.last_p
                     std_base_amo=std_base_amount(pair.base.name)
@@ -241,9 +244,11 @@ def main():
                     amo=bal.token.free*(pair.act_amo/100)
                     #amo=max(amo,std_amo)
                     #log('che za her:'+str(p)+';'+str(pair.buy_price))
+                    log(symbol+'cmp')
                     if (p>pair.sell_price):
                         _sell=1+pair.profit/100.0
                         amo=amo*math.log(p_koef,_sell)*max(pair.profit/pair.rebuy,1)/_sell
+                        #log(symbol+': Free='+str(bal.token.free)+'Amo='+str(amo))
                         if bal.token.free<amo:
                             continue
                         amo=-amo
