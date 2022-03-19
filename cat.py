@@ -312,7 +312,7 @@ def main():
         yield
         #time.sleep(1)
     webserv.shutd=True
-#exit(0)
+
 try:
     log('Init app.')
     webserv.StartServer(host='localhost',user_func=main,get_custom_handler=_custom_get,post_custom_handler=_custom_post)
