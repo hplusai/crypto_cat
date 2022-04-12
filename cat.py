@@ -105,6 +105,9 @@ def _custom_get(p,pars):
             tok,bas=get_tok_base('BTCUSDT',tot.keys())
             for n in cur.pairs:
                 v=cur.pairs[n]
+                #log(str(v))
+                if not (isinstance(v.symbol,str) and (v.symbol.strip()!='')):
+                    continue
                 v.price=order.prices[v.symbol]
                 tok,bas=get_tok_base(n,tot.keys())
                 v.token=tot[tok]
@@ -204,8 +207,8 @@ def main():
     upd_prices()
     while _now<stop_time:
         iter_cnt+=1
-        if iter_cnt%100==0:
-            log('iter=%d'%iter_cnt)
+        #if iter_cnt%10==0:
+        #    log('iter=%d'%iter_cnt)
         while as_secs((now()-t_last_req))<time_koef:
             yield
         upd_prices()
