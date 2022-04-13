@@ -34,6 +34,8 @@ def upd_act_prices(p):
     p.sell_price=_sell*p.last_p
     p.buy_price=_buy*p.last_p
 
+stables=('USDT','USDC','TUSD','BUSD','BTC','ETH','BNB','XRP','TRX')
+
 def get_tok_base(symb, toks):
 #    log('ahueli blyadi')
 #    log(symb)
@@ -42,26 +44,9 @@ def get_tok_base(symb, toks):
     if '_' in symb:
         return symb.split('_')
 
-    if symb.endswith('USDT'):
-        return [symb[:-4],'USDT']
-
-    if symb.endswith('BUSD'):
-        return [symb[:-4],'BUSD']
-
-    if symb.endswith('BTC'):
-        return [symb[:-3],'BTC']
-
-    if symb.endswith('ETH'):
-        return [symb[:-3],'ETH']
-
-    if symb.endswith('BNB'):
-        return [symb[:-3],'BNB']
-
-    if symb.endswith('XRP'):
-        return [symb[:-3],'XRP']
-
-    if symb.endswith('TRX'):
-        return [symb[:-3],'TRX']
+    for x in stables:
+        if symb.endswith(x):
+            return [symb[:-len(x)],x]
 
     for x in toks:
         if symb.endswith(x) and (symb[:-len(x)] in toks):
@@ -267,39 +252,41 @@ def main():
                         continue
                     #if bal.token.free<std_amo:
                     #    continue
-                    #need to move this part into post_order
-                    flDone=0
+                    #need to move this part (split small order <10$ on 2) into post_order
+                    amo1=0
+                    amo2=0
+
                     if abs(amo)<std_amo:
                         safe_koef=1.2
                         if amo<0:
                             if bal.base.free>std_base_amo*safe_koef:
                                 #buy std
-                                post_order(std_amo)
+                                amo1=std_amo
                                 #sell sum std+amo. reminder amo with minus
-                                post_order(amo-std_amo)
-                                flDone=1
+                                amo2=amo-std_amo
                             elif bal.token.free>(abs(amo)+std_amo)*safe_koef:
                                 #sell sum std+amo. reminder amo with minus
-                                post_order(amo-std_amo)
+                                amo1=amo-std_amo
                                 #buy std
-                                post_order(std_amo)
-                                flDone=1
+                                amo2=std_amo
                         elif amo>0:
                             if bal.base.free>(std_base_amo+amo*p)*safe_koef:
                                 #buy sum
-                                post_order(std_amo+amo)
+                                amo1=std_amo+amo
                                 #sell std
-                                post_order(-std_amo)
-                                flDone=1
+                                amo2=-std_amo
                             elif bal.token.free>amo*safe_koef:
                                 #sell std
-                                post_order(-std_amo)
+                                amo1=-std_amo
                                 #buy sum
-                                post_order(std_amo+amo)
-                                flDone=1
+                                amo2=std_amo+amo
                         else:
                             continue
-                    if not flDone:
+                    if amo1 or amo2:
+                        #small amo order, splitted on 2 orders. (min order size : limitation of exchange)
+                        post_order(amo1)
+                        post_order(amo2)
+                    else:
                         post_order(amo)
                     sMsg='%s:%.2f$(%.8f); %s'%(symbol,amo*p,amo,acc_name[:10])
                     info(sMsg)
