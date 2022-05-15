@@ -1,6 +1,8 @@
 ts_1min=60000;
 pairs={};
 $min_usd=11;
+usd_stables=['USDT','USDC','TUSD','BUSD'];
+
 //fl_upd_info=true;//first time always sync pair settings with server
 
 function auto_settings(title, price,onAply,onCancel){
@@ -243,12 +245,12 @@ function p_loss(){
 function upd_data(){
 //tickers
   let hide_inactive=$('#hide_inactive')[0].checked;
-  let only_usdt=$('#only_usdt')[0].checked;
+  let only_usd=$('#only_usd')[0].checked;
   let flt=$('#t_search').val().toUpperCase();
 //  console.log(flt);
   let sbody='';
   for (const [k, pair] of Object.entries(pairs)) {
-    if (only_usdt && (pair.base.name!='USDT')) continue;
+    if (only_usd && (usd_stables.indexOf(pair.base.name)<0)) continue;
     sbody+=add_rec(pair,'');
   };
   body=$('#pairs tbody').empty();
@@ -288,7 +290,7 @@ function upd_info(){
 
 $(function(){
   load_store();
-  $('#hide_inactive,#only_usdt').change(function() {
+  $('#hide_inactive,#only_usd').change(function() {
     upd_data();
   });
   $('#t_search').keyup(function() {

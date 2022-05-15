@@ -72,11 +72,14 @@ def _custom_get(p,pars):
                 token=key['asset']
                 amo=float(key['free'])+float(key['locked'])
                 t_usd=token+'USDT'
+                t_busd=token+'BUSD'
                 t_btc=token+'BTC'
                 b_usd='BTCUSDT'
                 usd=0
                 if token=='USDT':
                     usd=amo
+                elif t_busd in order.prices:
+                    usd=amo*order.prices[t_busd]
                 elif t_usd in order.prices:
                     usd=amo*order.prices[t_usd]
                 else:
