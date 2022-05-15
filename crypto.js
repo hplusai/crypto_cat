@@ -271,7 +271,13 @@ function upd_info(){
   .done(function(data) {
 //    console.log(data);
     let arr=eval(data);
-    let arr_sorted=arr.sort(function (a,b){return b.token.usd-a.token.usd});
+    let arr_sorted=arr.sort(function (a,b){
+	bv=b.token.usd;
+	if (b.mode=='auto') bv*=1000;
+	av=a.token.usd;
+	if (a.mode=='auto') av*=1000;
+	return bv-av;
+		});
     for (x of arr_sorted) {
       pairs[x.symbol]=x;
     };
